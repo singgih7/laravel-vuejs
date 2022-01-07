@@ -1,55 +1,59 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center mt-5">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Data Level</h3>
-          <div class="card-tools">
-            <button
-                type="button"
-                class="btn btn-success"
-                @click="showModal"
-            >
-                Tambah Level
-            </button>
-          </div>
-          </div>
-
-          <div class="card-body">
-            <div class="form-group">
-              <div class="table-responsive">
-                <table class="table">
-                  <tr>
-                    <th>Nama Level</th>
-                    <th>Aksi</th>
-                  </tr>
-                  <tr v-for="item in levels" :key="item.id">
-                    <td>{{ item.namalevel }}</td>
-                    <td>
-                        <a
-                            href="#"
-                            @click="showModalEdit(item)"
-                            ><i class="fas fa-edit blue"></i
-                        ></a>
-                        | <a
-                            href="#"
-                            @click="deleteData(item.id)"
-                            ><i
-                                class="fas fa-trash-alt red"
-                            ></i
-                        ></a>
-                    </td>
-                  </tr>
-                </table>
-              </div>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">List Data Anggaran</h3>
+                        <div class="card-tools">
+                            <button
+                                type="button"
+                                class="btn btn-success"
+                                @click="showModal"
+                            >
+                                Tambah Mata Anggaran
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <th>Mata Anggaran</th>
+                                        <th>Total Anggaran</th>
+                                        <th>Consume</th>
+                                        <th>Available</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                    <tr v-for="item in budget" :key="item.id">
+                                        <td>{{ item.mataanggaran }}</td>
+                                        <td>{{ item.totalanggaran }}</td>
+                                        <td>{{ item.consume }}</td>
+                                        <td>{{ item.available }}</td>
+                                        <td>
+                                            <a
+                                                href="#"
+                                                @click="showModalEdit(item)"
+                                                ><i class="fas fa-edit blue"></i
+                                            ></a>
+                                            | <a
+                                                href="#"
+                                                @click="deleteData(item.id)"
+                                                ><i
+                                                    class="fas fa-trash-alt red"
+                                                ></i
+                                            ></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Modal -->
+        <!-- Modal -->
         <div
             class="modal fade"
             id="modalmuncul"
@@ -66,14 +70,14 @@
                             id="exampleModalLongTitle"
                             v-show="!statusmodal"
                         >
-                            Tambah Level
+                            Tambah Mata Anggaran
                         </h5>
                         <h5
                             class="modal-title"
                             id="exampleModalLongTitle"
                             v-show="statusmodal"
                         >
-                            Ubah Level
+                            Ubah Mata Anggaran
                         </h5>
                         <button
                             type="button"
@@ -86,23 +90,70 @@
                     </div>
                     <form
                         @submit.prevent="
-                            statusmodal ? ubahData() : simpanData1()
+                            statusmodal ? ubahData() : simpanData()
                         "
                     >
                         <div class="modal-body">
                             <div class="form-group">
                                 <input
                                     type="text"
-                                    v-model="form.namalevel"
+                                    v-model="form.mataanggaran"
                                     class="form-control"
-                                    placeholder="Nama Level"
+                                    placeholder="Mata Anggaran"
                                     :class="{
-                                        'is-invalid': form.errors.has('namalevel')
+                                        'is-invalid': form.errors.has('mataanggaran')
                                     }"
                                 />
                                 <has-error
                                     :form="form"
-                                    field="namalevel"
+                                    field="mataanggaran"
+                                ></has-error>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    v-model="form.totalanggaran"
+                                    class="form-control"
+                                    placeholder="totalanggaran"
+                                    :class="{
+                                        'is-invalid': form.errors.has('totalanggaran')
+                                    }"
+                                />
+                                <has-error
+                                    :form="form"
+                                    field="totalanggaran"
+                                ></has-error>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    v-model="form.consume"
+                                    class="form-control"
+                                    :class="{
+                                        'is-invalid': form.errors.has('consume')
+                                    }"
+                                    placeholder="Consume"
+                                />
+                                <has-error
+                                    :form="form"
+                                    field="consume"
+                                ></has-error>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    v-model="form.available"
+                                    class="form-control"
+                                    :class="{
+                                        'is-invalid': form.errors.has(
+                                            'available'
+                                        )
+                                    }"
+                                    placeholder="available"
+                                />
+                                <has-error
+                                    :form="form"
+                                    field="available"
                                 ></has-error>
                             </div>
                         </div>
@@ -144,26 +195,29 @@
             </div>
         </div>
         <!-- /Modal -->
-
-  </div>
+    </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      loading: false,
-      disabled: false,
-      levels: {},
-      statusmodal: false,
-      form: new Form({
+    data() {
+        return {
+            loading: false,
+            disabled: false,
+            levels: {},
+            budget: {},
+            statusmodal: false,
+            form: new Form({
                 id: "",
-                namalevel: "",
-      })
-    };
-  },
-  methods: {
-     showModal() {
+                mataanggaran: "",
+                totalanggaran: "",
+                consume: "",
+                available: ""
+            })
+        };
+    },
+    methods: {
+        showModal() {
             this.statusmodal = false;
             this.form.reset();
             $("#modalmuncul").modal("show");
@@ -174,21 +228,20 @@ export default {
             $("#modalmuncul").modal("show");
             this.form.fill(item);
         },
-
-    loadData() {
-      this.$Progress.start();
-      axios
-        .get("api/ambildatalevel")
-        .then(({ data }) => (this.levels = data));
-      axios.get("api/user").then(({ data }) => (this.users = data));
-      this.$Progress.finish();
-  },
-  simpanData1() {
+        loadData() {
+            this.$Progress.start();
+            axios
+                .get("api/ambildatalevel")
+                .then(({ data }) => (this.levels = data));
+            axios.get("api/budget").then(({ data }) => (this.budget = data));
+            this.$Progress.finish();
+        },
+        simpanData() {
             this.$Progress.start();
             this.loading = true;
             this.disabled = true;
             this.form
-                .post("api/level")
+                .post("api/budget")
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -211,7 +264,7 @@ export default {
             this.loading = true;
             this.disabled = true;
             this.form
-                .put("api/level/" + this.form.id)
+                .put("api/budget/" + this.form.id)
                 .then(() => {
                     Fire.$emit("refreshData");
                     $("#modalmuncul").modal("hide");
@@ -241,7 +294,7 @@ export default {
             }).then(result => {
                 if (result.value) {
                     this.form
-                        .delete("api/level/" + id)
+                        .delete("api/budget/" + id)
                         .then(() => {
                             Swal.fire(
                                 "Terhapus",
@@ -260,12 +313,12 @@ export default {
                 }
             });
         }
-        },
-  created() {
-    this.loadData();
-    Fire.$on("refreshData", () => {
+    },
+    created() {
+        this.loadData();
+        Fire.$on("refreshData", () => {
             this.loadData();
         });
-  }
+    }
 };
 </script>

@@ -10,7 +10,7 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "axios": "^0.21",
+        "axios": "^0.21.4",
         "bootstrap": "^4.6.0",
         "jquery": "^3.6",
         "laravel-mix": "^6.0.6",
@@ -29,6 +29,10 @@
         "@fortawesome/fontawesome-free": "^5.15.4",
         "admin-lte": "^3.0.0-alpha.2",
         "node": "^14.18.1",
-        "vue-router": "^3.5.2"
+        "vform": "^2.1.2",
+        "vue-form": "^4.10.3",
+        "vue-progressbar": "^0.7.5",
+        "vue-router": "^3.5.3",
+        "vue-sweetalert2": "^5.0.2"
     }
 }
